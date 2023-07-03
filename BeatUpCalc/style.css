@@ -1,0 +1,56 @@
+* {
+    background-color: #2c2828;
+    color: #e4e4e4;
+    font-family: Verdana, sans-serif;
+    font-optical-sizing: auto;
+    font-size: 15px;
+}
+
+#flexContainer{
+    display: flex;
+}
+
+#mass {
+    margin-left: 5%;
+}
+
+#possOutPut{
+    display: flex;
+}
+
+h1 {
+    margin-left: 5%;
+    font-size: x-large;
+}
+
+select{
+    padding-left: 5px;
+    margin: 1px;
+}
+
+button {
+    padding: 10px 20px;
+    margin-top: 15px;
+    margin-left: 10px;
+    border: 2px groove #e4e4e4;
+    border-radius: 2px;
+    box-shadow: 8px 4px 4px black;
+}
+
+button:active {
+    box-shadow: 0px 0px 0px black;
+    margin-left: 13px;
+    margin-top: 16px;
+}
+
+#outputP {
+    font-size: large;
+}
+
+
+#end {
+    margin-top: 50px;
+    margin-left: 5%;
+    color: darkgray;
+}
+

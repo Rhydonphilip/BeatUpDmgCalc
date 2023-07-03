@@ -1,0 +1,302 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Beat Up Calc 0.2 </title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <h1>Beat Up Calculator</h1>
+    <div id="flexContainer">
+        <div id="mass">
+            <label for="gen5">Gen 5 Types Chart?</label> <input type="checkbox" id="gen5" name="Gen 5">
+            <label for="lvl5">Level 5</label> <input type="checkbox" checked id="lvl5" name="Level 5">
+            <label for="reflect">Reflect </label> <input type="checkbox" id="reflect" name="Reflect">
+            <p></p>
+            <label for="sr">Stealth Rock </label> <input type="checkbox" id="sr" name="Stealth Rock ">
+            <label for="spike">Spikes</label>
+            <select title="spikes" id="spike">
+                <option selected value="none">none</option>
+                <option value="1">1</option>
+                <option value="2">2</option>
+                <option value="3">3</option>
+            </select>
+
+            <p></p>
+
+            <p>Place your pokemon's attack stats below: </p>
+
+            <div>
+                <label for="stab">STAB ?</label> <input type="checkbox" checked id="stab" name="STAB">
+                <label for="tera">Tera</label> <input type="checkbox" id="tera" name="tera">
+                <label for="burn">Burned? </label> <input type="checkbox" id="burn" name="burn">
+            </div>
+
+            <div> Your held item: 
+                <select title="user's Item" id="userItem">
+                    <option selected value="none">none</option>
+                    <option value="Life Orb">Life Orb</option>
+                    <option value="Black Glasses">Black Glasses</option>
+                    <option value="Choice Band">Choice Band</option>
+                </select>
+            </div>
+
+            <div>
+                <input title="base attack 1" type="number" id="atkMon1" name="base attack1" value="65" min="5" max="140">
+                <select title="The attacker" id="selectMon1">
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option selected value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                </select>     
+                <select title="Attacker's attack stages" id="attackStage">
+                    <option value="-6">-6</option>
+                    <option value="-5">-5</option>
+                    <option value="-4">-4</option>
+                    <option value="-3">-3</option>
+                    <option value="-2">-2</option>
+                    <option value="-1">-1</option>
+                    <option selected value="0">0</option>
+                    <option value="1">1</option>
+                    <option value="2">2</option>
+                    <option value="3">3</option>
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                </select>
+                <label for="attackStage">Attack</label>
+            </div>
+
+            <div>
+                <input title="base attack 2" type="number" id="atkMon2" name="base attack2" value="45" min="5" max="140">
+                <input type="checkbox" id="hkBoxMon2" name="fainted"> <label for="hkBoxMon2">Fainted</label>
+            </div>
+
+            <div>
+                <input title="base attack 3" type="number" id="atkMon3" name="base attack3" value="45" min="5" max="140">
+                <input type="checkbox" id="hkBoxMon3" name="fainted"> <label for="hkBoxMon3">Fainted</label>
+            </div>
+
+            <div>
+                <input title="base attack 4" type="number" id="atkMon4" name="base attack4" value="45" min="5" max="140">
+                <input type="checkbox" id="hkBoxMon4" name="fainted"> <label for="hkBoxMon4">Fainted</label>
+            </div>
+
+            <div>
+                <input title="base attack 5" type="number" id="atkMon5" name="base attack5" value="45" min="5" max="140">
+                <input type="checkbox" id="hkBoxMon5" name="fainted"> <label for="hkBoxMon5">Fainted</label>
+            </div>
+
+            <div>
+                <input title="base attack 6" type="number" id="atkMon6" name="base attack6" value="45" min="5" max="140">
+                <input type="checkbox" id="hkBoxMon6" name="fainted"> <label for="hkBoxMon6">Fainted</label>
+            </div>
+
+            <div id="opponent">
+                <p>The opponent: </p>
+                <label>Current HP: </label> 
+                <select title="opponent's current HP" id="oppHP">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option selected value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                </select>
+
+                <label>Max HP: </label> 
+                <select title="opponent's Max HP" id="oppMaxHP">
+                    <option value="4">4</option>
+                    <option value="5">5</option>
+                    <option value="6">6</option>
+                    <option value="7">7</option>
+                    <option value="8">8</option>
+                    <option value="9">9</option>
+                    <option value="10">10</option>
+                    <option value="11">11</option>
+                    <option value="12">12</option>
+                    <option value="13">13</option>
+                    <option value="14">14</option>
+                    <option value="15">15</option>
+                    <option value="16">16</option>
+                    <option value="17">17</option>
+                    <option value="18">18</option>
+                    <option value="19">19</option>
+                    <option value="20">20</option>
+                    <option selected value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                </select>
+
+                <div>
+                    <select title="opponent's Defense" id="oppDefense">
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                        <option value="7">7</option>
+                        <option value="8">8</option>
+                        <option value="9">9</option>
+                        <option value="10">10</option>
+                        <option value="11">11</option>
+                        <option selected value="12">12</option>
+                        <option value="13">13</option>
+                        <option value="14">14</option>
+                        <option value="15">15</option>
+                        <option value="16">16</option>
+                        <option value="17">17</option>
+                        <option value="18">18</option>
+                        <option value="19">19</option>
+                        <option value="20">20</option>
+                        <option value="21">21</option>
+                        <option value="22">22</option>
+                        <option value="23">23</option>
+                        <option value="24">24</option>
+                    </select>
+                    <select title="opp's Defense stages" id="defStage">
+                        <option value="-6">-6</option>
+                        <option value="-5">-5</option>
+                        <option value="-4">-4</option>
+                        <option value="-3">-3</option>
+                        <option value="-2">-2</option>
+                        <option value="-1">-1</option>
+                        <option selected value="0">0</option>
+                        <option value="1">1</option>
+                        <option value="2">2</option>
+                        <option value="3">3</option>
+                        <option value="4">4</option>
+                        <option value="5">5</option>
+                        <option value="6">6</option>
+                    </select>
+                    <label for="defStage">Defense</label>
+                </div>
+
+                <div>
+                    <select title="opponent's primary typing" id="type1">
+                        <option selected value="Normal">none</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Water">Water</option>
+                        <option value="Grass">Grass</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Dark">Dark</option>
+                        <option selected value="Psychic">Psychic</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Poison">Poison</option>
+                        <option value="Flying">Flying</option>
+                        <option value="Fighting">Fighting</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Ground">Ground</option>
+                        <option value="Ice">Ice</option>
+                        <option value="Fairy">Fairy</option>
+                        <option value="Steel">Steel</option>
+                        <option value="Dragon">Dragon</option>
+                        <option value="Ghost">Ghost</option>
+                    </select>
+                    <select title="opponent's secondary typing" id="type2">
+                        <option selected value="none">none</option>
+                        <option value="Normal">Normal</option>
+                        <option value="Fire">Fire</option>
+                        <option value="Water">Water</option>
+                        <option value="Grass">Grass</option>
+                        <option value="Electric">Electric</option>
+                        <option value="Dark">Dark</option>
+                        <option value="Psychic">Psychic</option>
+                        <option value="Bug">Bug</option>
+                        <option value="Poison">Poison</option>
+                        <option value="Flying">Flying</option>
+                        <option value="Fighting">Fighting</option>
+                        <option value="Rock">Rock</option>
+                        <option value="Ground">Ground</option>
+                        <option value="Ice">Ice</option>
+                        <option value="Fairy">Fairy</option>
+                        <option value="Steel">Steel</option>
+                        <option value="Dragon">Dragon</option>
+                        <option value="Ghost">Ghost</option>
+                    </select>
+                    <label for="type2">Typing</label>
+                </div>
+
+                <div>
+                    <select title="opponent's ability" id="oppAbility">
+                        <option selected value="none">none</option>
+                        <option value="Weak Armor gen5-6">Weak Armor gen5-6</option>
+                        <option value="Weak Armor gen7+">Weak Armor gen7+</option>
+                        <option value="Stamina">Stamina</option>
+                        <option value="Fur Coat">Fur Coat</option>
+                    </select>
+                    <label for="oppAbility">Ability</label>
+                </div>
+
+                <div>
+                    <select title="opponent's item" id="oppItem">
+                        <option selected value="none">none</option>
+                        <option value="Berry Juice">Berry Juice</option>
+                        <option value="Eviolite">Eviolite</option>
+                        <option value="Oran Berry">Oran Berry</option>
+                    </select>
+                    <label for="oppItem">Item</label>
+                </div>
+
+            </div>
+            
+            <button type="button" name="Calculate" id="calcBtn">Calculate</button>
+        </div>
+
+        <div>
+            <p id="outputP"> </p>
+            <p id="possOutPut">Possible damage amounts: </p>
+        </div>
+    </div>
+    <p id="end">Damage calc by Rhydonphilip</p>
+    <script src="BeatUpJS.js"></script>
+</body>
+</html>
