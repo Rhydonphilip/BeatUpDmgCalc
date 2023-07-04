@@ -241,15 +241,15 @@ document.getElementById("calcBtn").onclick = function() {
             damage = ((2*lvl)/5 + 2) * basePow;
             damage = Math.floor(damage);
             damage = (damage * usrAtk) / oppDef;
-            /*
-            damage *= usrAtk;
+           
+            /*damage *= usrAtk;
             damage = Math.floor(damage);
             damage /= oppDef; //I am uncertain what is going wrong here; it works fine for negative defense stages but not possitives*/
             damage = Math.floor(damage);
-            if (damage == 0) damage = 1;
+            // if (damage == 0) damage = 1;
             damage /= 50;
             damage = Math.floor(damage);
-            if (damage == 0) damage = 1;
+            // if (damage == 0) damage = 1;
             damage += 2;
             damage = Math.floor(damage);
             damage *= rando;
