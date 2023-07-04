@@ -1,15 +1,14 @@
 //to-do list:
-//doesn't appear to account for defense stat stages... I legit don't know why, it's the simplest thing in the world as I am just doing: userDef * <resulted increase for that stat stage> = the true defense
-//jk, chance to KO calc and all
+//doesn't have a chance based damage calculation
 //I could account for Status conditions as well
 
-let stab = 1; //stab value
-let other = 1; //other multiplier used for practically everything ranging from weather to abilities to items
 let randoValues = [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]; //all potential integers used for the randomized roll
 
 document.getElementById("calcBtn").onclick = function() {
     let randKOCount = 0; //counter for how many Ko's
+    let turnCnt = 1;
     let oppDef; 
+    let other = 1; //other multiplier used for practically everything ranging from weather to abilities to items
     document.getElementById("possOutPut").innerHTML = "Possible damage amounts: <br />";
     let resultString = document.getElementById("possOutPut").innerHTML; //output field for each individual damage roll
 
@@ -18,12 +17,13 @@ document.getElementById("calcBtn").onclick = function() {
     if (!document.getElementById("lvl5").checked) lvl = 100;
     
     //checking STAB
+    let stab = 1; //stab value
     if (document.getElementById("stab").checked) stab = 1.5;
     if (document.getElementById("tera").checked) stab = 2;
 
     //checking usr's attack value
     let usrAtkBstMult = staStagSwtch(+document.getElementById("attackStage").value);
-    let usrAtk = document.getElementById("selectMon1").value * usrAtkBstMult;
+    let usrAtk = (+document.getElementById("selectMon1").value) * usrAtkBstMult;
     usrAtk = Math.floor(usrAtk);
 
     //checking opposing typing
@@ -57,8 +57,8 @@ document.getElementById("calcBtn").onclick = function() {
     }
 
     //checking opposing HP
-    let currentHP = document.getElementById("oppHP").value;
-    let maxHP = document.getElementById("oppMaxHP").value;
+    let currentHP = +document.getElementById("oppHP").value;
+    let maxHP = +document.getElementById("oppMaxHP").value;
     if (currentHP > maxHP) currentHP = maxHP;
 
     //checking how many party members
@@ -80,11 +80,11 @@ document.getElementById("calcBtn").onclick = function() {
         usrAtk = tempAtk;
     } 
 
-    //check for reflect, sr, spikes
+    //check for reflect, sr, spikes, status conditions
     if (document.getElementById("reflect").checked) {
         other = other / 2;
     }
-    hazardCheck();
+    residDmgCheck();
 
 
     document.getElementById("outputP").innerHTML = "Beat Up has a " + (randKOCount / 16) + "% chance to " ;
@@ -96,7 +96,8 @@ document.getElementById("calcBtn").onclick = function() {
         document.getElementById("possOutPut").innerHTML = resultString;
         document.getElementById("outputP").innerHTML += "2HKO it";
     } else {
-        hazardCheck();
+        turnCnt = 2;
+        residDmgCheck();
         if (damageCalc(randoValues[0]) <= (maxHP/2)){
         document.getElementById("possOutPut").innerHTML = resultString;
         document.getElementById("outputP").innerHTML += "2HKO it after taking double hazards";
@@ -112,7 +113,7 @@ document.getElementById("calcBtn").onclick = function() {
         }
     }    
 
-    //possible damage roll's as an output
+    //possible damage roll's as an output; need to be turned back into HTML
     document.getElementById("possOutPut").innerHTML = resultString;
 
     if (damageCalc(randoValues[0]) <= 0) document.getElementById("outputP").innerHTML = "It always KO's"; //if the min roll always KO's
@@ -120,7 +121,7 @@ document.getElementById("calcBtn").onclick = function() {
 
 
     //internal Functions
-    function hazardCheck(){
+    function residDmgCheck(){
         //checks for Stealth Rocks and Spikes
         if (document.getElementById("sr").checked) {
             let divSR = 8;
@@ -144,6 +145,7 @@ document.getElementById("calcBtn").onclick = function() {
             currentHP -= tempSR;
         }
 
+        //check spikes
         if (document.getElementById("spike").value == "1") {
             let tempSpk = maxHP/8;
             tempSpk = Math.floor(tempSpk);
@@ -156,6 +158,18 @@ document.getElementById("calcBtn").onclick = function() {
             let tempSpk = maxHP/4;
             tempSpk = Math.floor(tempSpk);
             currentHP -= tempSpk;
+        }
+
+        //check status
+        let oppStatus = document.getElementById("oppStatus").value;
+        if (oppStatus == "brn5" || oppStatus == "psn" || (oppStatus == "toxic" && turnCnt == 2) ) {
+            let tempStD = maxHP/8;
+            tempStD = Math.floor(tempStD);
+            currentHP -= tempStD;
+        } else if (oppStatus == "brn7" || oppStatus == "toxic") {
+            let tempStD = maxHP/16;
+            tempStD = Math.floor(tempStD);
+            currentHP -= tempStD;
         }
     }
 
@@ -212,24 +226,23 @@ document.getElementById("calcBtn").onclick = function() {
     }
 
     function damageCalc(randVal){
-        rando = randVal/100; //the interget given from the array needs to be turned into a %
+        rando = randVal/100; //the integer given from the array needs to be turned into a %
 
         resultString += "roll " + randVal + ": (";  //start of the list of individual hits
         let KO = 0; //KO boolean
 
-        let oppDefStage = +document.getElementById("defStage").value;        //initializing the defense stage and adjusting it only as a variable in here
+        //initializing the defense stage and adjusting it only as a variable in here
+        let oppDefStage = +document.getElementById("defStage").value;
         let resHP = currentHP;
         let basePow, damage;
         //the damage calc and damage being removed from total HP
         for (let i = 0; i < partyMemberNumber ; i++) {
-            //output string to display which damage roll happened where
-
             //Adjusting potential stat states that may change mid attack (Weak Armor or Stamina)
             oppDefMult = staStagSwtch(oppDefStage);
             if (document.getElementById("oppAbility").value == "Fur Coat"){
-                oppDef = document.getElementById("oppDefense").value * 2 * oppDefMult;
+                oppDef = (+document.getElementById("oppDefense").value) * 2 * oppDefMult;
             } else {
-                oppDef = document.getElementById("oppDefense").value * oppDefMult;
+                oppDef = (+document.getElementById("oppDefense").value) * oppDefMult;
             }
 
             //the actual damage determination:
@@ -241,10 +254,11 @@ document.getElementById("calcBtn").onclick = function() {
             damage = ((2*lvl)/5 + 2) * basePow;
             damage = Math.floor(damage);
             damage = (damage * usrAtk) / oppDef;
-           
-            /*damage *= usrAtk;
+            /* //it does not appear calcing it in the above written way or in this commented out way, would change the resulting damage
+            damage *= usrAtk;
             damage = Math.floor(damage);
-            damage /= oppDef; //I am uncertain what is going wrong here; it works fine for negative defense stages but not possitives*/
+            damage /= oppDef; 
+            */
             damage = Math.floor(damage);
             // if (damage == 0) damage = 1;
             damage /= 50;
@@ -311,5 +325,5 @@ document.getElementById("calcBtn").onclick = function() {
 }
 
 /*
-Code by Rhydonphilip
+Code by Rhydonphilip, with help of Albison_
 */

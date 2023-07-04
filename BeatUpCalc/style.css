@@ -43,6 +43,10 @@ button:active {
     margin-top: 16px;
 }
 
+input[type='number']{
+    width: 40px;
+} 
+
 #outputP {
     font-size: large;
 }
