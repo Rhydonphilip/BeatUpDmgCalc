@@ -1,6 +1,6 @@
 //to-do list:
 //doesn't have a chance based damage calculation
-//I could account for Status conditions as well
+//Make it so it doesn't show a duplicate of damage calcs
 
 let randoValues = [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]; //all potential integers used for the randomized roll
 
@@ -11,6 +11,7 @@ document.getElementById("calcBtn").onclick = function() {
     let other = 1; //other multiplier used for practically everything ranging from weather to abilities to items
     document.getElementById("possOutPut").innerHTML = "Possible damage amounts: <br />";
     let resultString = document.getElementById("possOutPut").innerHTML; //output field for each individual damage roll
+    let baseAtkArray = [];
 
     //checking level
     let lvl = 5;
@@ -61,13 +62,16 @@ document.getElementById("calcBtn").onclick = function() {
     let maxHP = +document.getElementById("oppMaxHP").value;
     if (currentHP > maxHP) currentHP = maxHP;
 
-    //checking how many party members
-    let partyMemberNumber = 6;
-    if (document.getElementById("hkBoxMon2").checked) partyMemberNumber--;
-    if (document.getElementById("hkBoxMon3").checked) partyMemberNumber--;
-    if (document.getElementById("hkBoxMon4").checked) partyMemberNumber--;
-    if (document.getElementById("hkBoxMon5").checked) partyMemberNumber--;
-    if (document.getElementById("hkBoxMon6").checked) partyMemberNumber--;
+    //checking for fainted party members, and addressing the respective attack values if existant
+    baseAtkArray.push(+document.getElementById("atkMon1").value);
+    for (let v = 2; v < 7; v++){
+        let hkBoxMonCount = "hkBoxMon" + v;
+        if (!document.getElementById(hkBoxMonCount).checked){
+            let selector = "atkMon" + v;
+            baseAtkArray.push(+document.getElementById(selector).value);
+            console.log(baseAtkArray[v-2]);
+        }
+    }    
 
     //checking for Items and Burn
     if (document.getElementById("burn").checked) other *= 0.5;
@@ -91,16 +95,16 @@ document.getElementById("calcBtn").onclick = function() {
     //need to run through all the rando values, and make it output each instance it did KO
     if (damageCalc(randoValues[0]) <= 0){
         document.getElementById("possOutPut").innerHTML = resultString;
-        document.getElementById("outputP").innerHTML += "OHKO it";
+        document.getElementById("outputP").innerHTML += "OHKO";
     } else if (damageCalc(randoValues[0]) <= (maxHP/2)) {
         document.getElementById("possOutPut").innerHTML = resultString;
-        document.getElementById("outputP").innerHTML += "2HKO it";
+        document.getElementById("outputP").innerHTML += "2HKO";
     } else {
         turnCnt = 2;
         residDmgCheck();
         if (damageCalc(randoValues[0]) <= (maxHP/2)){
         document.getElementById("possOutPut").innerHTML = resultString;
-        document.getElementById("outputP").innerHTML += "2HKO it after taking double hazards";
+        document.getElementById("outputP").innerHTML += "2HKO after taking double hazards";
         } else {
         document.getElementById("possOutPut").innerHTML = resultString;
         }
@@ -118,7 +122,6 @@ document.getElementById("calcBtn").onclick = function() {
 
     if (damageCalc(randoValues[0]) <= 0) document.getElementById("outputP").innerHTML = "It always KO's"; //if the min roll always KO's
     
-
 
     //internal Functions
     function residDmgCheck(){
@@ -236,7 +239,7 @@ document.getElementById("calcBtn").onclick = function() {
         let resHP = currentHP;
         let basePow, damage;
         //the damage calc and damage being removed from total HP
-        for (let i = 0; i < partyMemberNumber ; i++) {
+        for (let i = 0; i < baseAtkArray.length; i++) {
             //Adjusting potential stat states that may change mid attack (Weak Armor or Stamina)
             oppDefMult = staStagSwtch(oppDefStage);
             if (document.getElementById("oppAbility").value == "Fur Coat"){
@@ -246,9 +249,7 @@ document.getElementById("calcBtn").onclick = function() {
             }
 
             //the actual damage determination:
-            let k = i+1;
-            let selector = "atkMon" + k;
-            basePow = (+document.getElementById(selector).value / 10) + 5;
+            basePow = (baseAtkArray[i] / 10) + 5;
             basePow = Math.floor(basePow);
     
             damage = ((2*lvl)/5 + 2) * basePow;
@@ -311,7 +312,7 @@ document.getElementById("calcBtn").onclick = function() {
     
             if (KO == 0){
                 if (resHP <= 0) {
-                    document.getElementById("outputP").innerHTML = "KO's"; // in " + (i+1) + " out of " + partyMemberNumber + " potential hits"; //unfinished
+                    document.getElementById("outputP").innerHTML = "KO's"; // in " + (i+1) + " out of " + baseAtkArray.length + " potential hits"; //unfinished
                     KO = 1;
                 } else {
                     document.getElementById("outputP").innerHTML = "remaining HP = " +  resHP + " out of " + maxHP;
