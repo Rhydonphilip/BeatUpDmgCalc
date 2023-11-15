@@ -33,12 +33,21 @@
                 <label for="burn">Burned? </label> <input type="checkbox" id="burn" name="burn">
             </div>
 
-            <div> Your held item: 
+            <div> Your item: 
                 <select title="user's Item" id="userItem">
                     <option selected value="none">none</option>
                     <option value="Life Orb">Life Orb</option>
                     <option value="Black Glasses">Black Glasses</option>
                     <option value="Choice Band">Choice Band</option>
+                </select>
+            </div>
+
+            <div> Your Ability: 
+                <select title="user's Ability" id="userAbility">
+                    <option selected value="none">none</option>
+                    <option value="Tough Claws">Tough Claws</option>
+                    <option value="Hustle">Hustle</option>
+                    <option value="Technician">Technician</option>
                 </select>
             </div>
 
@@ -61,32 +70,38 @@
                     <option value="-5">-5</option>
                     <option value="-6">-6</option>
                 </select>
-                <label for="attackStage">Attack</label>
+                <label for="attackStage">Attack </label>
+                <label for="crBoxMon1"> Crit</label><input type="checkbox" id="crBoxMon1" name="crit">
             </div>
 
             <div>
                 <input title="base attack 2" type="number" id="atkMon2" name="base attack2" value="45" min="1" max="255">
-                <input type="checkbox" id="hkBoxMon2" name="fainted"> <label for="hkBoxMon2">Fainted</label>
+                <label for="hkBoxMon2">Faint/Status</label><input type="checkbox" id="hkBoxMon2" name="fainted"> 
+                <label for="crBoxMon2">Crit</label><input type="checkbox" id="crBoxMon2" name="crit">
             </div>
 
             <div>
                 <input title="base attack 3" type="number" id="atkMon3" name="base attack3" value="45" min="1" max="255">
-                <input type="checkbox" id="hkBoxMon3" name="fainted"> <label for="hkBoxMon3">Fainted</label>
+                <label for="hkBoxMon3">Faint/Status</label><input type="checkbox" id="hkBoxMon3" name="fainted">
+                <label for="crBoxMon3">Crit</label><input type="checkbox" id="crBoxMon3" name="crit">
             </div>
 
             <div>
                 <input title="base attack 4" type="number" id="atkMon4" name="base attack4" value="45" min="1" max="255">
-                <input type="checkbox" id="hkBoxMon4" name="fainted"> <label for="hkBoxMon4">Fainted</label>
+                <label for="hkBoxMon4">Faint/status</label><input type="checkbox" id="hkBoxMon4" name="fainted">
+                <label for="crBoxMon4">Crit</label><input type="checkbox" id="crBoxMon4" name="crit"> 
             </div>
 
             <div>
                 <input title="base attack 5" type="number" id="atkMon5" name="base attack5" value="45" min="1" max="255">
-                <input type="checkbox" id="hkBoxMon5" name="fainted"> <label for="hkBoxMon5">Fainted</label>
+                <label for="hkBoxMon5">Faint/Status</label><input type="checkbox" id="hkBoxMon5" name="fainted">
+                <label for="crBoxMon5">Crit</label><input type="checkbox" id="crBoxMon5" name="crit">
             </div>
 
             <div>
                 <input title="base attack 6" type="number" id="atkMon6" name="base attack6" value="45" min="1" max="255">
-                <input type="checkbox" id="hkBoxMon6" name="fainted"> <label for="hkBoxMon6">Fainted</label>
+                <label for="hkBoxMon6">Faint/Status</label><input type="checkbox" id="hkBoxMon6" name="fainted">
+                <label for="crBoxMon6">Crit</label><input type="checkbox" id="crBoxMon6" name="crit">
             </div>
 
             <div id="opponent">
