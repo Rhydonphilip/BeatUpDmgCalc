@@ -274,6 +274,7 @@ document.getElementById("calcBtn").onclick = function() {
         let oppDefStage = +document.getElementById("defStage").value;
         let resHP = currentHP;
         //the damage calc and damage being removed from total HP
+        let itemConsumed = false;
         for (let i = 0; i < 6; i++) {
             if (monObjects[i].fainted == 0) 
             {    
@@ -342,15 +343,20 @@ document.getElementById("calcBtn").onclick = function() {
         
                 //reducing HP from total
                 resHP -= damage;
-                if (document.getElementById("oppItem").value == "Berry Juice") {
+                if (itemConsumed == true) {
+                    
+                }
+                else if (document.getElementById("oppItem").value == "Berry Juice") {
                     if ((maxHP / 2) > resHP) {
                         resHP += 20;
                         if (resHP > maxHP) resHP = maxHP;
+                        itemConsumed = true;
                     }
                 } else if (document.getElementById("oppItem").value == "Oran Berry") {
                     if ((maxHP / 2) > resHP) {
                         resHP += 10;
                         if (resHP > maxHP) resHP = maxHP;
+                        itemConsumed = true;
                     }
                 }
         
