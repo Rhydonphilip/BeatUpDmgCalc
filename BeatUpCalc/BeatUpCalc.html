@@ -10,14 +10,14 @@
     <h1>Beat Up Calculator</h1>
     <div id="flexContainer">
         <div id="mass">
-            <label for="gen5">Gen 5 Types Chart?</label> <input type="checkbox" id="gen5" name="Gen 5">
-            <label for="lvl5">Level 5</label> <input type="checkbox" checked id="lvl5" name="Level 5">
-            <label for="reflect">Reflect </label> <input type="checkbox" id="reflect" name="Reflect">
+            <label for="gen5">Gen 5 Type Chart?</label><input type="checkbox" id="gen5" name="Gen 5">
+            <label for="lvl5"> Level 5</label><input type="checkbox" checked id="lvl5" name="Level 5">
+            <label for="reflect"> Reflect/Veil</label><input type="checkbox" id="reflect" name="Reflect">
             <p></p>
-            <label for="sr">Stealth Rock </label> <input type="checkbox" id="sr" name="Stealth Rock ">
-            <label for="spike">Spikes</label>
+            <label for="sr">Stealth Rock</label><input type="checkbox" id="sr" name="Stealth Rock ">
+            <label for="spike"> Spikes</label>
             <select title="spikes" id="spike">
-                <option selected value="none">none</option>
+                <option selected value="0">0</option>
                 <option value="1">1</option>
                 <option value="2">2</option>
                 <option value="3">3</option>
@@ -28,25 +28,26 @@
             <p>Place your pokemon's attack stats below: </p>
 
             <div>
-                <label for="stab">STAB ?</label> <input type="checkbox" id="stab" name="STAB">
-                <label for="tera">Tera</label> <input type="checkbox" id="tera" name="tera">
-                <label for="burn">Burned? </label> <input type="checkbox" id="burn" name="burn">
+                <label for="stab">STAB ?</label><input type="checkbox" id="stab" name="STAB">
+                <label for="tera"> Tera</label><input type="checkbox" id="tera" name="tera">
+                <label for="burn"> Burned?</label><input type="checkbox" id="burn" name="burn">
             </div>
 
             <div> Your item: 
                 <select title="user's Item" id="userItem">
                     <option selected value="none">none</option>
-                    <option value="Life Orb">Life Orb</option>
                     <option value="Black Glasses">Black Glasses</option>
                     <option value="Choice Band">Choice Band</option>
+                    <option value="Life Orb">Life Orb</option>
                 </select>
             </div>
 
             <div> Your Ability: 
                 <select title="user's Ability" id="userAbility">
                     <option selected value="none">none</option>
-                    <option value="Tough Claws">Tough Claws</option>
+<!--                    <option value="Tough Claws">Tough Claws</option>-->
                     <option value="Hustle">Hustle</option>
+                    <option value="Stakeout">Stakeout</option>
                     <option value="Technician">Technician</option>
                 </select>
             </div>
@@ -105,7 +106,7 @@
             </div>
 
             <div id="opponent">
-                <p>The opponent: </p>
+                <p>The opponent's: </p>
                 <label>Current HP: </label> 
                 <input title="Opponent's current HP" type="number" id="oppHP" name="current HP" value="21" min="1" max="999">
                 <label for="oppMaxHP">Max HP: </label> <input title="Opponent's Max HP" type="number" id="oppMaxHP" name="current HP" value="21" min="1" max="999">
@@ -178,8 +179,7 @@
                 <div>
                     <select title="opponent's ability" id="oppAbility">
                         <option selected value="none">none</option>
-                        <option value="Weak Armor gen5-6">Weak Armor gen5-6</option>
-                        <option value="Weak Armor gen7+">Weak Armor gen7+</option>
+                        <option value="Weak Armor">Weak Armor</option>
                         <option value="Stamina">Stamina</option>
                         <option value="Fur Coat">Fur Coat</option>
                     </select>
@@ -212,7 +212,7 @@
             <button type="button" name="Calculate" id="calcBtn">Calculate</button>
         </div>
 
-        <div>
+        <div id="outputArea">
             <p id="outputP"> </p>
             <p id="possOutPut">Possible damage amounts: </p>
         </div>

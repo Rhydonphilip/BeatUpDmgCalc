@@ -114,7 +114,8 @@ document.getElementById("calcBtn").onclick = function() {
     if (document.getElementById("userItem").value == "Black Glasses") other *= 1.2;
     if (document.getElementById("userItem").value == "Life Orb") other *= 1.3;
     if (document.getElementById("userAbility").value == "Hustle") other *= 1.5;
-    if (document.getElementById("userAbility").value == "Tough Claws") other *= (5325 /4096);
+    if (document.getElementById("userAbility").value == "Stakeout") other *= 2;
+//  if (document.getElementById("userAbility").value == "Tough Claws") other *= (5325 /4096);
     if (document.getElementById("userAbility").value == "Technician") {
         let base = (monObjects[1].baseAtk / 10) + 5;
         base = Math.floor(base);
@@ -326,13 +327,8 @@ document.getElementById("calcBtn").onclick = function() {
                 resultString += damage + ", "; 
         
                 //stamina and Weak armor procs
-                if (document.getElementById("oppAbility").value == "Weak Armor gen5-6"){
+                if (document.getElementById("oppAbility").value == "Weak Armor"){
                     oppDefStage--;
-                    if (oppDefStage <= -6) oppDefStage = -6;
-                }
-        
-                if (document.getElementById("oppAbility").value == "Weak Armor gen7+"){
-                    oppDefStage -= 2;
                     if (oppDefStage <= -6) oppDefStage = -6;
                 }
         

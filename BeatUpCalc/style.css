@@ -47,10 +47,13 @@ input[type='number']{
     width: 40px;
 } 
 
+#outputArea {
+    margin-left: 3%;
+}
+
 #outputP {
     font-size: large;
 }
-
 
 #end {
     margin-top: 50px;
