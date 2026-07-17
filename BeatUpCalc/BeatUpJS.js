@@ -21,7 +21,7 @@ document.getElementById("calcBtn").onclick = function() {
     if (document.getElementById("stab").checked) {stab += 0.5;};
     if (document.getElementById("tera").checked) {stab += 0.5;};
 
-    //checking usr's attack value
+    //checking user's attack value
     let usrAtkBstMult = staStagSwtch(+document.getElementById("attackStage").value);
     let usrAtk = (+document.getElementById("selectMon1").value) * usrAtkBstMult;
     usrAtk = Math.floor(usrAtk);
@@ -110,7 +110,6 @@ document.getElementById("calcBtn").onclick = function() {
 
     //checking for Items and Burn
     if (document.getElementById("burn").checked) other *= 0.5;
-    if (document.getElementById("oppItem").value == "Eviolite") other /= 1.5;
     if (document.getElementById("userItem").value == "Black Glasses") other *= 1.2;
     if (document.getElementById("userItem").value == "Life Orb") other *= 1.3;
     if (document.getElementById("userAbility").value == "Hustle") other *= 1.5;
@@ -283,6 +282,10 @@ document.getElementById("calcBtn").onclick = function() {
                 oppDefMult = staStagSwtch(oppDefStage);
                 if (document.getElementById("oppAbility").value == "Fur Coat"){
                     oppDef = (+document.getElementById("oppDefense").value) * 2 * oppDefMult;
+                } 
+
+                if (document.getElementById("oppItem").value == "Eviolite"){
+                    oppDef = (+document.getElementById("oppDefense").value) * 1.5 * oppDefMult;
                 } else {
                     oppDef = (+document.getElementById("oppDefense").value) * oppDefMult;
                 }
@@ -373,5 +376,5 @@ document.getElementById("calcBtn").onclick = function() {
 }
 
 /*
-Code by Rhydonphilip, with help of Albison_
+Code by Rhydonphilip, with help of Albison_ and a nice bugfix catch by Reggg
 */
