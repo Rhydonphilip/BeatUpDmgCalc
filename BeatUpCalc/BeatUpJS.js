@@ -1,14 +1,11 @@
-//to-do list:
-//still duplicate calcs
-//doesn't have a chance based damage calculation
-
 let randoValues = [85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100]; //all potential integers used for the randomized roll
 
 document.getElementById("calcBtn").onclick = function() {
     let randKOCount = 0; //counter for how many Ko's
     let turnCnt = 1;
     let oppDef; 
-    let other = 1; //other multiplier used for practically everything ranging from weather to abilities to items
+    let other = 4096; //other multiplier used for practically everything ranging from weather to abilities to items
+    let burn = 4096;
     document.getElementById("possOutPut").innerHTML = "Possible damage amounts: <br />";
     let resultString = document.getElementById("possOutPut").innerHTML; //output field for each individual damage roll
 
@@ -17,17 +14,17 @@ document.getElementById("calcBtn").onclick = function() {
     if (!document.getElementById("lvl5").checked) lvl = 100;
     
     //checking STAB
-    let stab = 1; //stab value
-    if (document.getElementById("stab").checked) {stab += 0.5;};
-    if (document.getElementById("tera").checked) {stab += 0.5;};
+    let stab = 4096; //base stab in Pokemon's bit notation
+    if (document.getElementById("stab").checked) {stab += 2048;};
+    if (document.getElementById("tera").checked) {stab += 2048;};
 
     //checking user's attack value
-    let usrAtkBstMult = staStagSwtch(+document.getElementById("attackStage").value);
+    let usrAtkBstMult = statStageSwitch(+document.getElementById("attackStage").value);
     let usrAtk = (+document.getElementById("selectMon1").value) * usrAtkBstMult;
     usrAtk = Math.floor(usrAtk);
 
     //checking opposing typing
-    let typeRes = 1;
+    let typeRes = 4096;
     type1 = document.getElementById("type1").value;
     type2 = document.getElementById("type2").value;
     if (document.getElementById("gen5").checked){
@@ -66,32 +63,32 @@ document.getElementById("calcBtn").onclick = function() {
         mon1 = {
             baseAtk: +document.getElementById("atkMon1").value,
             fainted: 0,
-            crit: 1
+            crit: 4096
         },
         mon2 = {
             baseAtk: +document.getElementById("atkMon2").value,
             fainted: 0,
-            crit: 1
+            crit: 4096
         },
         mon3 = {
             baseAtk: +document.getElementById("atkMon3").value,
             fainted: 0,
-            crit: 1
+            crit: 4096
         },
         mon4 = {
             baseAtk: +document.getElementById("atkMon4").value,
             fainted: 0,
-            crit: 1
+            crit: 4096
         },
         mon5 = {
             baseAtk: +document.getElementById("atkMon5").value,
             fainted: 0,
-            crit: 1
+            crit: 4096
         },
         mon6 = {
             baseAtk: +document.getElementById("atkMon6").value,
             fainted: 0,
-            crit: 1
+            crit: 4096
         }
     ];
 
@@ -100,7 +97,8 @@ document.getElementById("calcBtn").onclick = function() {
         let crBoxMon_X = "crBoxMon" + p;
         if (document.getElementById(crBoxMon_X).checked)
         {
-            monObjects[p-1].crit = 1.5;
+            if (document.getElementById("gen5").checked) monObjects[p-1].crit = 8192;
+            else monObjects[p-1].crit = 6144;
         }
         let hkBoxMon_X = "hkBoxMon" + p;
         if (p != 1) {
@@ -109,26 +107,24 @@ document.getElementById("calcBtn").onclick = function() {
     }
 
     //checking for Items and Burn
-    if (document.getElementById("burn").checked) other *= 0.5;
-    if (document.getElementById("userItem").value == "Black Glasses") other *= 1.2;
-    if (document.getElementById("userItem").value == "Life Orb") other *= 1.3;
-    if (document.getElementById("userAbility").value == "Hustle") other *= 1.5;
-    if (document.getElementById("userAbility").value == "Stakeout") other *= 2;
+    if (document.getElementById("burn").checked)
+        burn = pokeRound(other * 2048 / 4096);
+    if (document.getElementById("userItem").value == "Black Glasses")
+        other = pokeRound(other * 4915 / 4096);
+    if (document.getElementById("userItem").value == "Life Orb")
+        other = pokeRound(other * 5324 / 4096);
+    if (document.getElementById("userAbility").value == "Hustle")
+        other = pokeRound(other * 6144 / 4096);
+    if (document.getElementById("userAbility").value == "Stakeout")
+        other = pokeRound(other * 8192 / 4096);
 //  if (document.getElementById("userAbility").value == "Tough Claws") other *= (5325 /4096);
-    if (document.getElementById("userAbility").value == "Technician") {
-        let base = (monObjects[1].baseAtk / 10) + 5;
-        base = Math.floor(base);
-        if (base <= 60) {other *= 1.5;}; //research implies user's atk is solely checked to then boost all following (akin to other multihits)
-    }
-    //let technicianBool = false;
+    let technicianBool = false;
     if (document.getElementById("userItem").value == "Choice Band") {
-        let tempAtk = usrAtk * 1.5;
-        Math.floor(tempAtk); //potential issue
-        usrAtk = tempAtk;
+        usrAtk = Math.floor(usrAtk * 6144 / 4096);
     } 
 
     //checks for reflect
-    if (document.getElementById("reflect").checked) {other /= 2;};
+    if (document.getElementById("reflect").checked) {other = pokeRound(other / 2);};
     //Checks for sr, spikes, status conditions
     residDmgCheck();
 
@@ -214,7 +210,7 @@ document.getElementById("calcBtn").onclick = function() {
 
 
     //switch to determine fractions for stat stages
-    function staStagSwtch(x){
+    function statStageSwitch(x){
         //this changes what the stat stage value is, ranging from -6 to 6 into a boost multiplier using its fraction. 
         //If negative: the fraction is changed on the bottom. If possitive it instead increases on the top. It's 2/2 by default aka a 1x multiplier
         let top = 2;
@@ -264,9 +260,33 @@ document.getElementById("calcBtn").onclick = function() {
         return rslt;
     }
 
-    function damageCalc(randVal){
-        rando = randVal/100; //the integer given from the array needs to be turned into a %
+    function getBaseDamage(level, basePower, attack, defense) {
+        return Math.floor(
+            OF32(
+                Math.floor(
+                    OF32(OF32(Math.floor((2 * level) / 5 + 2) * basePower) * attack) / defense
+                ) / 50 + 2
+            )
+        );
+    }
 
+    // Game Freak rounds DOWN on .5
+    function pokeRound(num) {
+        return num % 1 > 0.5 ? Math.ceil(num) : Math.floor(num);
+    }
+
+    // 16-bit Overflow
+    function OF16(n) {
+        return n > 65535 ? n % 65536 : n;
+    }
+
+    // 32-bit Overflow
+    function OF32(n) {
+        return n > 4294967295 ? n % 4294967296 : n;
+    }
+
+
+    function damageCalc(randVal){
         resultString += "roll " + randVal + ": (";  //start of the list of individual hits
         let KO = 0; //KO boolean
 
@@ -277,59 +297,47 @@ document.getElementById("calcBtn").onclick = function() {
         let itemConsumed = false;
         for (let i = 0; i < 6; i++) {
             if (monObjects[i].fainted == 0) 
-            {    
+            {
                 //Adjusting potential stat states that may change mid attack (Weak Armor or Stamina)
-                oppDefMult = staStagSwtch(oppDefStage);
-                if (document.getElementById("oppAbility").value == "Fur Coat"){
-                    oppDef = (+document.getElementById("oppDefense").value) * 2 * oppDefMult;
-                } 
+                if (monObjects[i].crit == 4096) {
+                    oppDefMult = statStageSwitch(oppDefStage);
+                    if (document.getElementById("oppAbility").value == "Fur Coat"){
+                        oppDef = (+document.getElementById("oppDefense").value) * 2 * oppDefMult;
+                    } 
 
-                if (document.getElementById("oppItem").value == "Eviolite"){
-                    oppDef = (+document.getElementById("oppDefense").value) * 1.5 * oppDefMult;
+                    if (document.getElementById("oppItem").value == "Eviolite"){
+                        oppDef = (+document.getElementById("oppDefense").value) * 1.5 * oppDefMult;
+                    } else {
+                        oppDef = (+document.getElementById("oppDefense").value) * oppDefMult;
+                    }
                 } else {
-                    oppDef = (+document.getElementById("oppDefense").value) * oppDefMult;
+                    oppDef = (+document.getElementById("oppDefense").value);
+                }
+
+                let basePow = Math.floor(monObjects[i].baseAtk / 10) + 5;
+                basePow = OF16(Math.max(1, pokeRound(basePow)));
+
+                //check technician
+                let otherWithTechnician = other;
+                if (basePow <= 60 && document.getElementById("userAbility").value == "Technician") {
+                    otherWithTechnician = pokeRound(other * 6144 / 4096);
                 }
 
                 //the true damage calc:
-                let basePow = (monObjects[i].baseAtk / 10) + 5;
-                basePow = Math.floor(basePow);
-                /*if (basePow <= 60) {
-                    if (technicianBool != true) {
-                        if (document.getElementById("userAbility").value == "Technician") {
-                            other *= 1.5;
-                            technicianBool = true;
-                        };
-                    }
-                }*/
-                let damage = ((2*lvl)/5 + 2) * basePow;
-                damage = Math.floor(damage);
-                damage *= usrAtk;
-                damage = Math.floor(damage);
-                damage /= oppDef; 
-                damage = Math.floor(damage);
-                // if (damage == 0) damage = 1;
-                damage /= 50;
-                damage = Math.floor(damage);
-                // if (damage == 0) damage = 1;
-                damage += 2; //beyond me why this exists in the original damage calc
-                damage = Math.floor(damage);
-                damage *= rando;
-                damage = Math.floor(damage);
-                damage *= stab;
-                damage = Math.floor(damage);
-                damage *= typeRes;
-                damage = Math.floor(damage);
-                damage *= other;
-                damage = Math.floor(damage);
-                damage *= monObjects[i].crit;
-                damage = Math.floor(damage);
-                if (damage == 0) damage = 1;
+                let damage = getBaseDamage(lvl, basePow, usrAtk, oppDef);
+                damage = pokeRound(damage * monObjects[i].crit / 4096);
+                damage = Math.floor(damage * randVal / 100);
+                damage = pokeRound(damage * stab / 4096);
+                damage = pokeRound(damage * typeRes / 4096);
+                damage = pokeRound(damage * burn / 4096);
+                damage = pokeRound(damage * otherWithTechnician / 4096);
+                if (damage == 0) { damage = 1;} 
                 //end of the true damage calc
 
                 //appending a seperator comma for our list of individual hits
                 resultString += damage + ", "; 
         
-                //stamina and Weak armor procs
+                //Stamina and Weak Armor procs
                 if (document.getElementById("oppAbility").value == "Weak Armor"){
                     oppDefStage--;
                     if (oppDefStage <= -6) oppDefStage = -6;
