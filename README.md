@@ -3,4 +3,4 @@ A simple Beat Up damage calc for the Pokemon series, supporting gen5+ (from gen 
 
 Haven't bothered to host it on anything yet. So just click code -> download zip
 
-Unzip and open with a webbrowser.
+Unzip and open the .html with a webbrowser (Chrome / Edge / Firefox / etc).

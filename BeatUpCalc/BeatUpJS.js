@@ -10,8 +10,7 @@ document.getElementById("calcBtn").onclick = function() {
     let resultString = document.getElementById("possOutPut").innerHTML; //output field for each individual damage roll
 
     //checking level
-    let lvl = 5;
-    if (!document.getElementById("lvl5").checked) lvl = 100;
+    let lvl = document.getElementById("lvl").value;
     
     //checking STAB
     let stab = 4096; //base stab in Pokemon's bit notation

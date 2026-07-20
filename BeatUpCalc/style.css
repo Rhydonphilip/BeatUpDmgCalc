@@ -43,8 +43,14 @@ button:active {
     margin-top: 16px;
 }
 
+#columnHeader label {
+    display: inline-block;
+    width: 55px;
+    text-align: center;
+}
+
 input[type='number']{
-    width: 40px;
+    width: 45px;
 } 
 
 #outputArea {
